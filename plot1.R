@@ -1,0 +1,11 @@
+p<-read.table(file.choose(),header=T,sep=";")
+p$Date<-as.Date(p$Date,"%d/%m/%Y")
+part1<-subset(p,p$Date=="2007-02-01")
+part2<-subset(p,p$Date=="2007-02-02")
+data<-rbind(part1,part2)
+x1<-data[,3]
+x2<-as.character(x1)
+x3<-as.numeric(x2)
+hist(x3,col="red",xlab="Global Active Power(kilowatts)",main="Global Active Power")
+dev.copy(png,file="plot1.png")
+dev.off()
