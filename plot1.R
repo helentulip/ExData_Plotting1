@@ -1,11 +1,7 @@
-p<-read.table(file.choose(),header=T,sep=";")
-p$Date<-as.Date(p$Date,"%d/%m/%Y")
-part1<-subset(p,p$Date=="2007-02-01")
-part2<-subset(p,p$Date=="2007-02-02")
-data<-rbind(part1,part2)
-x1<-data[,3]
-x2<-as.character(x1)
-x3<-as.numeric(x2)
-hist(x3,col="red",xlab="Global Active Power(kilowatts)",main="Global Active Power")
-dev.copy(png,file="plot1.png")
+rawdata<-read.table("household_power_consumption.txt",header=T,sep=";",comment.char="%",stringsAsFactor=FALSE,na.string="?")
+rawdata<-na.omit(rawdata)
+data<-rawdata[rawdata$Date %in% c("1/2/2007","2/2/2007"),]
+data$Time<-strptime(paste(data$Date,data$Time,sep=" "),"%d/%m/%Y %H:%M:%S")
+hist(data$Global_active_power,main="Global Active Power",col="red",xlab="Global Active Power(kilowatts)")
+dev.copy(png,file="plot1")
 dev.off()
