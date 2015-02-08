@@ -1,0 +1,10 @@
+rawdata<-read.table("household_power_consumption.txt",header=T,sep=";",comment.char="%",stringsAsFactor=FALSE,na.string="?")
+rawdata<-na.omit(rawdata)
+data<-rawdata[rawdata$Date %in% c("1/2/2007","2/2/2007"),]
+data$Time<-strptime(paste(data$Date,data$Time,sep=" "),"%d/%m/%Y %H:%M:%S")
+plot(data$Time,data$Sub_metering_1,ylab="Energy sub metering",lwd=1,type="l",xlab="")
+lines(data$Time,data$Sub_metering_2,col="red")
+lines(data$Time,data$Sub_metering_3,col="blue")
+legend("topright",lty=1,col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),cex=0.7)
+dev.copy(png,file="plot3")
+dev.off()
